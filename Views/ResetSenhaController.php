@@ -1,8 +1,8 @@
 <?php
+
 require_once __DIR__ . '/../Dados/ResetSenha.php';
-require_once __DIR__ . '/../Dados/Auth.php';
 require_once __DIR__ . '/../Dados/Usuario.php';
-require_once __DIR__ . '/../Dados/db.php';
+require_once __DIR__ . '/enviar_email.php';
 
 class ResetSenhaController
 {
@@ -17,16 +17,23 @@ class ResetSenhaController
 
         // Validar se o email está registrado no banco
         if (!Usuario::buscarPorEmail($email)) {
-            die("Email não encontrado no sistema. <br><a href='../form_esqueci_senha.php'>Tentar novamente</a>");
+             header('Location: ../form_login.php?recuperacao_enviada=0');
+             exit();
         }
 
         $token = bin2hex(random_bytes(10));
         $expira = date('y-m-d H:i:s', strtotime('+1 hour'));
 
+
         Reset_Senha::removerToken($email);
         Reset_Senha::criarToken($email, $token, $expira);
 
-        header('Location: ../form_resetar_senha.php?token=' . $token);
+        $emailService = new EmailService();
+        $envio_email = $emailService->enviarEmailRecuperacao($email, $token);
+        if ($envio_email !== true) {
+            die($envio_email);
+        }
+        header('Location: ../form_login.php?recuperacao_enviada=1');
         exit();
     }
 
@@ -46,15 +53,10 @@ class ResetSenhaController
         } else {
 
             $hash = password_hash($nova_senha, PASSWORD_DEFAULT);
-
             $conn = database::conectar();
-            $stmt = $conn->prepare(
-                "UPDATE usuarios SET senha = :senha WHERE email = :email"
-            );
+            $stmt = $conn->prepare("UPDATE usuarios SET senha = :senha WHERE email = :email");
             $stmt->execute([':senha' => $hash, ':email' => $registro['email']]);
-
             Reset_Senha::removerToken($registro['email']);
-
             header('Location: ../form_login.php?sucesso=1');
             exit();
         }

@@ -4,8 +4,11 @@ require_once 'db.php';
 class Auth
 {
 
+    // Registra um novo usuário e envia e-mail de confirmação
     public static function registrar($nome, $idade, $email, $senha)
     {
+        require_once __DIR__ . '/Confirm.php';
+        require_once __DIR__ . '/../Views/Enviar_email.php';
         $conn = database::conectar();
 
         if (self::email_existe($email)) {
@@ -13,17 +16,24 @@ class Auth
         }
 
         $hash = password_hash($senha, PASSWORD_DEFAULT);
+        // Gera token de confirmação para o novo usuário
+        $token = Confirm::gerarToken($email);
 
         $stmt =  $conn->prepare('
-        INSERT INTO usuarios (nome, idade, email, senha) 
-        VALUES (:nome, :idade, :email, :senha)
+        INSERT INTO usuarios (nome, idade, email, senha, email_verificado, token_confirm) 
+        VALUES (:nome, :idade, :email, :senha, 0, :token)
     ');
         $stmt->execute([
             ':nome' => $nome,
             ':idade' => $idade,
             ':email' => $email,
-            ':senha' => $hash
+            ':senha' => $hash,
+            ':token' => $token  
         ]);
+
+        // Envia e-mail de confirmação com o token gerado
+        $emailService = new EmailService();
+        $emailService->enviarEmailConfirmacao($email, $token);
     }
 
     public static function login($email, $senha)
@@ -37,7 +47,12 @@ class Auth
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($usuario && password_verify($senha, $usuario['senha'])) {
-            return $usuario;
+            if (isset($usuario['email_verificado']) && $usuario['email_verificado'] == 1) {
+                return $usuario;
+            } else {
+                // E-mail não verificado
+                return 'not_verified';
+            }
         } else {
             return false;
         }

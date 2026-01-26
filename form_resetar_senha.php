@@ -1,5 +1,7 @@
+
 <?php
-$token = $_GET["token"] ?? ''; // Adicionei o null coalescing operator para evitar erro se o token não vier
+// Recupera o token da URL para redefinição de senha (evita erro se não vier)
+$token = $_GET["token"] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -87,7 +89,7 @@ $token = $_GET["token"] ?? ''; // Adicionei o null coalescing operator para evit
                 </div>
 
                 <div class="text-center mt-3 text-muted small">
-                    &copy; <?php echo date('Y'); ?> Seu Sistema
+                    &copy; <?php echo date('Y'); ?> CRUD INICIAL
                 </div>
 
             </div>

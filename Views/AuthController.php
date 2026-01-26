@@ -15,13 +15,16 @@ class AuthController {
     }
     public static function login(){
         $usuario = Auth::login($_POST['email'], $_POST['senha']);
-        if ($usuario) {
+        if ($usuario && is_array($usuario)) {
             $_SESSION['usuario'] = [
                 'id' => $usuario['id'],
                 'nome' => $usuario['nome'],
                 'email' => $usuario['email']
             ];
             header('Location: ../index.php');
+        } elseif ($usuario === 'not_verified') {
+            header('Location: ../form_login.php?erro_verificacao=1');
+            exit();
         } else {
             header('Location: ../form_login.php?erro=1');
             exit();

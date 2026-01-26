@@ -29,7 +29,7 @@ $usuario = UsuarioController::obterUsuario($_GET['id']);
             border-radius: 1rem;
         }
 
-        /* Ajuste para inputs ficarem na mesma altura dos ícones */
+        /* inputs na mesma altura dos ícones */
         .input-group-text {
             background-color: #f8f9fa;
             border-right: none;
@@ -39,13 +39,13 @@ $usuario = UsuarioController::obterUsuario($_GET['id']);
             border-left: none;
         }
 
-        /* Foco no input ilumina a borda do ícone também */
+        /* Efeito de foco azul */
         .form-control:focus + .input-group-text, 
         .form-control:focus {
             box-shadow: none;
             border-color: #86b7fe; 
         }
-        /* Pequeno truque para borda do grupo quando focado */
+        /* Borda do grupo quando focado */
         .input-group:focus-within .input-group-text,
         .input-group:focus-within .form-control {
             border-color: #86b7fe;

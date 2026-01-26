@@ -22,7 +22,7 @@ $usuarios = UsuarioController::index();
     <title>CRUD Profissional</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+    <!-- CSS -->
     <style>
         /* Define a cor de fundo da página*/
         body {
@@ -76,6 +76,7 @@ $usuarios = UsuarioController::index();
             vertical-align: middle;
         }
     </style>
+    <!-- CSS -->
 </head>
 
 <body>
@@ -93,16 +94,19 @@ $usuarios = UsuarioController::index();
                 </p>
             </div>
 
+            <!-- botão de novo usuário -->
             <div class="col-md-6 text-end">
-                <a href="form_registro.php" class="btn btn-primary shadow-sm px-4">
+                <a href="form_registro.php" class="btn btn-outline-primary shadow-sm px-4">
                     <i class="fas fa-plus me-2"></i>Novo Usuário
                 </a>
             </div>
         </div>
 
+        <!-- quadro branco com sombra em volta da tabela -->
         <div class="card shadow border-0 mb-5">
             <div class="card-body p-0">
 
+                <!-- div para alinhar as informações em seus locais-->
                 <table class="table table-hover table-borderless align-middle mb-0">
 
                     <thead class="bg-light border-bottom">
@@ -119,6 +123,7 @@ $usuarios = UsuarioController::index();
                                 <td class="ps-4 py-3">
                                     <div class="d-flex align-items-center">
 
+                                        <!-- foto do usuario-->
                                         <div class="avatar-placeholder me-3 shadow-sm">
                                             <?php
                                             echo htmlspecialchars(substr($usuario['nome'], 0, 2));
@@ -144,10 +149,11 @@ $usuarios = UsuarioController::index();
 
                                 <td class="text-end pe-4">
                                     <div class="dropdown">
-                                        <button class="btn btn-light btn-sm text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn btn-outline-light btn-sm text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </button>
 
+                                        <!-- botão lateral das Ações -->
                                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
                                             <li>
                                                 <a class="dropdown-item small" href="form_editar.php?id=<?php echo $usuario['id']; ?>">
@@ -158,7 +164,9 @@ $usuarios = UsuarioController::index();
                                                 <hr class="dropdown-divider">
                                             </li>
                                             <li>
-                                                <a class="dropdown-item small text-danger" href="Views/deletar.php?id=<?php echo $usuario['id']; ?>" onclick="return confirm('Tem certeza que deseja deletar?');">
+                                                <a class="dropdown-item small text-danger" 
+                                                        href="Views/deletar.php?id=
+                                                        <?php echo $usuario['id']; ?>" onclick="return confirm('Tem certeza que deseja deletar?');">
                                                     <i class="fas fa-trash-alt me-2"></i> Deletar
                                                 </a>
                                             </li>
@@ -183,4 +191,3 @@ $usuarios = UsuarioController::index();
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-

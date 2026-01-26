@@ -12,10 +12,10 @@
         body {
             background-color: #f4f6f9; /* Fundo padrão do sistema */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh; /* Força a altura total da tela */
+            height: 100vh; 
             display: flex;
-            align-items: center; /* Centraliza verticalmente */
-            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /* vertical */
+            justify-content: center; /* horizontal */
         }
 
         .card {
@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="text-center mt-3 text-muted small">
-                    &copy; <?php echo date('Y'); ?> Seu Sistema
+                    &copy; <?php echo date('Y'); ?> CRUD INICIAL
                 </div>
 
             </div>

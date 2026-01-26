@@ -12,8 +12,8 @@
         body {
             background-color: #f4f6f9;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* Centraliza verticalmente se a tela for alta, mas permite scroll se for baixa */
-            min-height: 100vh; 
+            /* Centraliza verticalmente */
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -24,24 +24,24 @@
             border-radius: 1rem;
         }
 
-        /* Estilo para ícones dentro dos inputs */
+        /* ícones dentro dos inputs */
         .input-group-text {
             background-color: #f8f9fa;
             border-right: none;
             color: #6c757d;
         }
-        
+
         .form-control {
             border-left: none;
         }
 
-        /* Efeito de foco azul suave */
-        .form-control:focus + .input-group-text, 
+        /* Efeito de foco azul */
+        .form-control:focus+.input-group-text,
         .form-control:focus,
         .input-group:focus-within .input-group-text,
         .input-group:focus-within .form-control {
             box-shadow: none;
-            border-color: #86b7fe; 
+            border-color: #86b7fe;
             color: #495057;
         }
     </style>
@@ -52,10 +52,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-5">
-                
+
+                <!-- card branco em volta da label -->
                 <div class="card shadow-lg border-0">
                     <div class="card-body p-4">
-                        
+
                         <div class="text-center mb-4">
                             <div class="mb-3">
                                 <i class="fas fa-user-plus fa-3x text-primary"></i>
@@ -69,6 +70,7 @@
                                 <i class="fas fa-exclamation-circle me-2"></i>
                                 <div><strong>Ops!</strong> Este email já está cadastrado.</div>
                             </div>
+
                         <?php elseif (isset($_GET['sucesso']) && $_GET['sucesso'] == 1): ?>
                             <div class="alert alert-success d-flex align-items-center small" role="alert">
                                 <i class="fas fa-check-circle me-2"></i>
@@ -77,40 +79,64 @@
                         <?php endif; ?>
 
                         <form method="POST" action="Views/registrar_acao.php">
-                            
+
+                            <!--Nome -->
                             <div class="mb-3">
                                 <label class="form-label text-muted small fw-bold text-uppercase">Nome Completo</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    <input type="text" name="nome" class="form-control" placeholder="Seu nome" required>
+                                    <input type="text"
+                                        name="nome"
+                                        class="form-control"
+                                        placeholder="Seu nome"
+                                        required>
                                 </div>
                             </div>
 
                             <div class="row">
+                                <!--idade -->
                                 <div class="col-4 mb-3">
                                     <label class="form-label text-muted small fw-bold text-uppercase">Idade</label>
                                     <div class="input-group">
-                                        <span class="input-group-text px-2"><i class="fas fa-hashtag"></i></span>
-                                        <input type="number" name="idade" class="form-control px-2 text-center" placeholder="00" required>
+                                        <span class="input-group-text px-2"><i class="fas fa-birthday-cake"></i></span>
+                                        <input type="number"
+                                            name="idade"
+                                            class="form-control px-2 text-center"
+                                            placeholder="18+"
+                                            min="18"
+                                            max="120"
+                                            required
+                                            oninput="validarIdade(this)">
+                                    </div>
+                                    <div class="form-text text-danger d-none" id="erroIdade" style="font-size: 0.75rem;">
+                                        Idade mínima: 18 anos
                                     </div>
                                 </div>
+                                <!--email -->
                                 <div class="col-8 mb-3">
                                     <label class="form-label text-muted small fw-bold text-uppercase">Email</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                        <input type="email" name="email" class="form-control" placeholder="seu@email.com" required>
+                                        <input type="email"
+                                            name="email" class="form-control"
+                                            placeholder="seu@email.com"
+                                            required>
                                     </div>
                                 </div>
                             </div>
-
+                            <!-- senha  -->
                             <div class="mb-4">
                                 <label class="form-label text-muted small fw-bold text-uppercase">Senha</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                    <input type="password" name="senha" class="form-control" placeholder="Crie uma senha forte" required>
+                                    <input type="password"
+                                        name="senha"
+                                        class="form-control"
+                                        placeholder="Crie uma senha forte"
+                                        required>
                                 </div>
                             </div>
-
+                            <!-- botão registrar -->
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary py-2 fw-bold shadow-sm">
                                     Registrar-se
@@ -118,7 +144,7 @@
                             </div>
 
                         </form>
-
+                        <!-- link para login (parte de baixo da pagina) -->
                         <div class="text-center mt-4 pt-3 border-top">
                             <p class="small text-muted mb-0">Já tem uma conta?</p>
                             <a href="form_login.php" class="text-decoration-none fw-bold">
@@ -128,9 +154,9 @@
 
                     </div>
                 </div>
-                
+
                 <div class="text-center mt-3 text-muted small">
-                    &copy; <?php echo date('Y'); ?> Seu Sistema
+                    &copy; <?php echo date('Y'); ?> CRUD INICIAL
                 </div>
 
             </div>
@@ -138,6 +164,20 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function validarIdade(input) {
+            const idade = parseInt(input.value);
+            const erroIdade = document.getElementById('erroIdade');
+
+            if (idade < 18) {
+                erroIdade.classList.remove('d-none');
+                input.setCustomValidity('Idade mínima: 18 anos');
+            } else {
+                erroIdade.classList.add('d-none');
+                input.setCustomValidity('');
+            }
+        }
+    </script>
 </body>
 
 </html>

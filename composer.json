@@ -1,0 +1,17 @@
+{
+    "name": "dev/crud_profissional",
+    "autoload": {
+        "psr-4": {
+            "Dev\\CrudProfissional\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "kilmair"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "phpmailer/phpmailer": "^7.0"
+    }
+}

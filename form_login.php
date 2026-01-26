@@ -66,6 +66,22 @@
                             </div>
                         <?php endif; ?>
 
+                        <?php if (isset($_GET['recuperacao_enviada']) && $_GET['recuperacao_enviada'] == 1): ?>
+                            <div class="alert alert-success d-flex align-items-center small" role="alert">
+                                <i class="fas fa-check-circle me-2"></i>
+                                <div>Um email de recuperação foi enviado.</div>
+                            </div>
+                        <?php endif; ?>
+
+                        
+                        <?php if (isset($_GET['recuperacao_enviada']) && $_GET['recuperacao_enviada'] == 0): ?>
+                            <div class="alert alert-danger d-flex align-items-center small" role="alert">
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                <div>Email não encontrado no sistema.</div>
+                            </div>
+                        <?php endif; ?>
+
+
                         <form method="POST" action="Views/login_acao.php">
                             
                             <div class="mb-3">
@@ -113,7 +129,7 @@
                 </div>
 
                 <div class="text-center mt-3 text-muted small">
-                    &copy; <?php echo date('Y'); ?> Seu Sistema
+                    &copy; <?php echo date('Y'); ?> CRUD INICIAL
                 </div>
 
             </div>
