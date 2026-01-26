@@ -78,6 +78,14 @@
                             </div>
                         <?php endif; ?>
 
+                        <?php if (isset($_GET['erro_email'])): ?>
+                            <div class="alert alert-danger d-flex align-items-center small" role="alert">
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                <div>Ocorreu um erro ao enviar o e-mail de confirmação</div>
+                            </div>
+                        <?php endif; ?>
+
+
                         <form method="POST" action="Views/registrar_acao.php">
 
                             <!--Nome -->

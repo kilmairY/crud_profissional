@@ -8,7 +8,7 @@ class Auth
     public static function registrar($nome, $idade, $email, $senha)
     {
         require_once __DIR__ . '/Confirm.php';
-        require_once __DIR__ . '/../Views/Enviar_email.php';
+        require_once __DIR__ . '/../Views/EmailService.php';
         $conn = database::conectar();
 
         if (self::email_existe($email)) {

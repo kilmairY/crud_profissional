@@ -10,12 +10,15 @@
 
     <style>
         body {
-            background-color: #f4f6f9; /* Fundo padrão do sistema */
+            background-color: #f4f6f9;
+            /* Fundo padrão do sistema */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh; 
+            height: 100vh;
             display: flex;
-            align-items: center; /* vertical */
-            justify-content: center; /* horizontal */
+            align-items: center;
+            /* vertical */
+            justify-content: center;
+            /* horizontal */
         }
 
         .card {
@@ -42,10 +45,10 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-5 col-lg-4">
-                
+
                 <div class="card shadow-lg border-0 p-3">
                     <div class="card-body">
-                        
+
                         <div class="text-center">
                             <div class="icon-circle shadow-sm">
                                 <i class="fas fa-envelope-open-text fa-2x"></i>
@@ -56,8 +59,16 @@
                             </p>
                         </div>
 
+                        <?php if (isset($_GET['erro'])): ?>
+                            <div class="alert alert-danger d-flex align-items-center small" role="alert">
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                <div><?php echo isset($_GET['mensagem']) ? htmlspecialchars($_GET['mensagem']) : 'Ocorreu um erro ao enviar o email.'; ?></div>
+                            </div>
+                        <?php endif; ?>
+
+
                         <form method="POST" action="Views/esqueci_acao.php">
-                            
+
                             <div class="mb-4">
                                 <label for="email" class="form-label text-muted small fw-bold text-uppercase">Email Cadastrado</label>
                                 <div class="input-group">

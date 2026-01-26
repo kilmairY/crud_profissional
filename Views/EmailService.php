@@ -16,6 +16,23 @@ class EmailService{
     public $body = "";
     public $altBody = "";
 
+        public function __construct()
+    {
+        $this->mail = new PHPMailer(true);
+        $this->mail->isSMTP();
+        $this->mail->CharSet = 'UTF-8';
+        $this->mail->Encoding = 'base64';
+        $this->mail->Host       = 'smtp.gmail.com';
+        $this->mail->SMTPAuth   = true;
+        $this->mail->Username   = 'kilmair.y@estudante.ifmt.edu.br'; // Remetente
+        $this->mail->Password   = 'denf zchv dgfk pfck10'; // Senha do remetente
+        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $this->mail->Port       = 587;
+        $this->mail->setFrom('kilmair.y@estudante.ifmt.edu.br', 'Kilmair');
+        $this->mail->isHTML(true);
+        
+    }
+
     public function enviarEmailConfirmacao($email, $token)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -37,22 +54,7 @@ class EmailService{
         }
     }
 
-    public function __construct()
-    {
-        $this->mail = new PHPMailer(true);
-        $this->mail->isSMTP();
-        $this->mail->CharSet = 'UTF-8';
-        $this->mail->Encoding = 'base64';
-        $this->mail->Host       = 'smtp.gmail.com';
-        $this->mail->SMTPAuth   = true;
-        $this->mail->Username   = 'kilmair.y@estudante.ifmt.edu.br'; // Remetente
-        $this->mail->Password   = 'denf zchv dgfk pfck'; // Senha do remetente
-        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $this->mail->Port       = 587;
-        $this->mail->setFrom('kilmair.y@estudante.ifmt.edu.br', 'Kilmair');
-        $this->mail->isHTML(true);
-        
-    }
+
     public function enviarEmailRecuperacao($email, $token)
     {
         // Validação básica do e-mail

@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../Dados/ResetSenha.php';
 require_once __DIR__ . '/../Dados/Usuario.php';
-require_once __DIR__ . '/enviar_email.php';
+require_once __DIR__ . '/EmailService.php';
 
 class ResetSenhaController
 {
@@ -17,8 +17,8 @@ class ResetSenhaController
 
         // Validar se o email está registrado no banco
         if (!Usuario::buscarPorEmail($email)) {
-             header('Location: ../form_login.php?recuperacao_enviada=0');
-             exit();
+            header('Location: ../form_login.php?recuperacao_enviada=0');
+            exit();
         }
 
         $token = bin2hex(random_bytes(10));
@@ -31,7 +31,8 @@ class ResetSenhaController
         $emailService = new EmailService();
         $envio_email = $emailService->enviarEmailRecuperacao($email, $token);
         if ($envio_email !== true) {
-            die($envio_email);
+            header('Location: ../form_esqueci_senha.php?erro=1&mensagem=' . urlencode($envio_email));
+            exit();
         }
         header('Location: ../form_login.php?recuperacao_enviada=1');
         exit();
