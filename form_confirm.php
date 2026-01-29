@@ -59,10 +59,10 @@ if (isset($_GET['token'])) {
 					<div class="card-body">
 						<div class="text-center">
 							<div class="icon-circle shadow-sm mb-3">
-								<i class="fas fa-check-circle fa-2x <?php echo ($sucesso ?? false) ? 'text-success' : 'text-danger'; ?>"></i>
+								<i class="fas fa-check-circle fa-2x <?php if($sucesso ?? false) { echo 'text-success'; } else { echo 'text-danger'; } ?>"></i>
 							</div>
 							<h3 class="fw-bold text-dark mb-3">Confirmação de E-mail</h3>
-							<p class="<?php echo ($sucesso ?? false) ? 'text-success' : 'text-danger'; ?> fw-semibold mb-4"><?php echo $mensagem; ?></p>
+							<p class="<?php if($sucesso ?? false) { echo 'text-success'; } else { echo 'text-danger'; } ?> fw-semibold mb-4"><?php echo $mensagem; ?></p>
 							<a href="form_login.php" class="btn btn-primary w-100"><i class="fas fa-sign-in-alt me-2"></i>Ir para o login</a>
 						</div>
 					</div>

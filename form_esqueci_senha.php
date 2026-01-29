@@ -67,15 +67,15 @@
                         <?php endif; ?>
 
 
-                        <form method="POST" action="Views/esqueci_acao.php">
+                        <form method="POST" action="Views/esqueciacao.php?email_enviado=1">
 
                             <div class="mb-4">
-                                <label for="email" class="form-label text-muted small fw-bold text-uppercase">Email Cadastrado</label>
+                                <label for="Email" class="form-label text-muted small fw-bold text-uppercase">Email Cadastrado</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light border-end-0 text-muted">
                                         <i class="fas fa-at"></i>
                                     </span>
-                                    <input type="email" name="email" id="email" class="form-control bg-light border-start-0" placeholder="exemplo@email.com" required>
+                                    <input type="email" name="Email" id="Email" class="form-control bg-light border-start-0" placeholder="exemplo@email.com" required>
                                 </div>
                             </div>
 

@@ -2,7 +2,7 @@
 session_start();
 require_once __DIR__ . '/AuthController.php';
 
-$idade = filter_input(INPUT_POST, 'idade', FILTER_VALIDATE_INT);
+$idade = filter_input(INPUT_POST, 'Idade', FILTER_VALIDATE_INT);
 
 if($idade === false || $idade < 18) {
     header('Location: ../form_registro.php?erro_idade=1');

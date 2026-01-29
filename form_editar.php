@@ -6,7 +6,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 require_once __DIR__ . '/Dados/db.php';
 require_once __DIR__ . '/Views/UsuarioController.php';
-$usuario = UsuarioController::obterUsuario($_GET['id']);
+$usuario = UsuarioController::obterUsuario($_GET['Id']);
 ?>
 
 <!DOCTYPE html>
@@ -81,30 +81,30 @@ $usuario = UsuarioController::obterUsuario($_GET['id']);
                             </div>
                         <?php endif; ?>
 
-                        <form method="POST" action="Views/update.php?id=<?php echo $usuario['id']; ?>">
+                        <form method="POST" action="Views/update.php?id=<?php echo $usuario['Id']; ?>">
                             
                             <div class="mb-3">
-                                <label for="nome" class="form-label text-muted small fw-bold text-uppercase">Nome Completo</label>
+                                <label for="Nome" class="form-label text-muted small fw-bold text-uppercase">Nome Completo</label>
                                 <div class="input-group">
                                     <span class="input-group-text text-muted"><i class="fas fa-user"></i></span>
-                                    <input type="text" name="nome" id="nome" class="form-control" value="<?php echo htmlspecialchars($usuario['nome']); ?>" required>
+                                    <input type="text" name="Nome" id="Nome" class="form-control" value="<?php echo htmlspecialchars($usuario['Nome']); ?>" required>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
-                                    <label for="idade" class="form-label text-muted small fw-bold text-uppercase">Idade</label>
+                                    <label for="Idade" class="form-label text-muted small fw-bold text-uppercase">Idade</label>
                                     <div class="input-group">
                                         <span class="input-group-text text-muted"><i class="fas fa-calendar-day"></i></span>
-                                        <input type="number" name="idade" id="idade" class="form-control" value="<?php echo htmlspecialchars($usuario['idade']); ?>" required>
+                                        <input type="number" name="Idade" id="Idade" class="form-control" value="<?php echo htmlspecialchars($usuario['Idade']); ?>" required>
                                     </div>
                                 </div>
                                 
                                 <div class="col-md-8 mb-4">
-                                    <label for="email" class="form-label text-muted small fw-bold text-uppercase">Email</label>
+                                    <label for="Email" class="form-label text-muted small fw-bold text-uppercase">Email</label>
                                     <div class="input-group">
                                         <span class="input-group-text text-muted"><i class="fas fa-envelope"></i></span>
-                                        <input type="email" name="email" id="email" class="form-control" value="<?php echo htmlspecialchars($usuario['email']); ?>" required>
+                                        <input type="email" name="Email" id="Email" class="form-control" value="<?php echo htmlspecialchars($usuario['Email']); ?>" required>
                                     </div>
                                 </div>
                             </div>

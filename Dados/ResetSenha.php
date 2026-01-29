@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../Dados/db.php';
 
-class reset_senha
+class ResetSenha
 {
 
     public static function criarToken($email, $token, $expira)

@@ -25,7 +25,7 @@ class EmailService{
         $this->mail->Host       = 'smtp.gmail.com';
         $this->mail->SMTPAuth   = true;
         $this->mail->Username   = 'kilmair.y@estudante.ifmt.edu.br'; // Remetente
-        $this->mail->Password   = 'denf zchv dgfk pfck10'; // Senha do remetente
+        $this->mail->Password   = 'denf zchv dgfk pfck'; // Senha do remetente
         $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $this->mail->Port       = 587;
         $this->mail->setFrom('kilmair.y@estudante.ifmt.edu.br', 'Kilmair');
@@ -38,8 +38,8 @@ class EmailService{
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return 'E-mail inválido.';
         }
-        // Gera o link de confirmação apontando para a nova rota que redireciona para form_confirm.php
-        $link = 'http://' . $_SERVER['HTTP_HOST'] . '/Cod2/crud_profissional/Views/Confirm_Acao.php?token=' . $token;
+
+        $link = 'http://' . $_SERVER['HTTP_HOST'] . '/Cod2/crud_profissional/Views/ConfirmAcao.php?token=' . $token;
         $this->mail->Subject = '=?UTF-8?B?' . base64_encode('Confirmação de E-mail') . '?=';
         $this->mail->Body = '<p>Olá,</p><p>Por favor, confirme seu e-mail clicando no link abaixo:</p>';
         $this->mail->Body .= '<p><a href="' . $link . '">' . $link . '</a></p>';

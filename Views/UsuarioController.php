@@ -11,14 +11,15 @@ class UsuarioController
         return Usuario::listar();
     }
 
-    public static function criarUsuario($nome, $idade, $email)
+    public static function criarUsuario($nome, $idade, $email, $tipoUsuario)
     {
         try {
             Auth::registrar(
-                $_POST['nome'],
-                $_POST['idade'],
-                $_POST['email'],
-                $_POST['senha']
+                $_POST['Nome'],
+                $_POST['Idade'],
+                $_POST['Email'],
+                $_POST['Senha'],
+                $_POST['Tipo_Usuario'],
             );
             header('Location: ../index.php?sucesso=1');
         } catch (Exception $e) {
@@ -26,7 +27,6 @@ class UsuarioController
             exit();
         }
     }
-
     public static function obterUsuario($id)
     {
         return Usuario::obterPorId($id);

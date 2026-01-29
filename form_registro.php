@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -78,7 +81,7 @@
                             </div>
                         <?php endif; ?>
 
-                        <?php if (isset($_GET['erro_email'])): ?>
+                        <?php if (isset($_GET['erro_email'])&& $_GET['erro_email'] == 1): ?>
                             <div class="alert alert-danger d-flex align-items-center small" role="alert">
                                 <i class="fas fa-exclamation-circle me-2"></i>
                                 <div>Ocorreu um erro ao enviar o e-mail de confirmação</div>
@@ -86,7 +89,7 @@
                         <?php endif; ?>
 
 
-                        <form method="POST" action="Views/registrar_acao.php">
+                        <form method="POST" action="Views/RegistrarAcao.php?">
 
                             <!--Nome -->
                             <div class="mb-3">
@@ -94,7 +97,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                     <input type="text"
-                                        name="nome"
+                                        name="Nome"
                                         class="form-control"
                                         placeholder="Seu nome"
                                         required>
@@ -108,7 +111,7 @@
                                     <div class="input-group">
                                         <span class="input-group-text px-2"><i class="fas fa-birthday-cake"></i></span>
                                         <input type="number"
-                                            name="idade"
+                                            name="Idade"
                                             class="form-control px-2 text-center"
                                             placeholder="18+"
                                             min="18"
@@ -126,7 +129,7 @@
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                         <input type="email"
-                                            name="email" class="form-control"
+                                            name="Email" class="form-control"
                                             placeholder="seu@email.com"
                                             required>
                                     </div>
@@ -138,13 +141,31 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                     <input type="password"
-                                        name="senha"
+                                        name="Senha"    
                                         class="form-control"
                                         placeholder="Crie uma senha forte"
                                         required>
                                 </div>
                             </div>
+
+                            <!-- tipo de usuario -->
+                             <?php if (isset($_SESSION['usuario']) && isset($_SESSION['usuario']['tipo_usuario']) && $_SESSION['usuario']['tipo_usuario'] === 'admin'): ?>
+                                    <div class="mb-4">
+                                        <label class="form-label text-muted small fw-bold text-uppercase">Tipo de Usuário</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-users-cog"></i></span>
+                                            <select name="Tipo_Usuario" class="form-select" required>
+                                                <option value="" disabled selected>Selecione o tipo de usuário</option>
+                                                <option value="admin">Administrador</option>
+                                                <option value="usuario">Usuário Comum</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                            <?php else: ?>
+                                    <input type="hidden" name="Tipo_Usuario" value="usuario">
+                            <?php endif; ?>
                             <!-- botão registrar -->
+                             
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary py-2 fw-bold shadow-sm">
                                     Registrar-se

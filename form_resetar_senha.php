@@ -59,16 +59,16 @@ $token = $_GET["token"] ?? '';
                             <p class="text-muted small mb-4">Insira sua nova senha abaixo para recuperar o acesso.</p>
                         </div>
 
-                        <form method="POST" action="Views/resetar_acao.php">
+                        <form method="POST" action="Views/resetaracao.php">
                             <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
                             
                             <div class="mb-4">
-                                <label for="senha" class="form-label text-muted small fw-bold text-uppercase">Nova Senha</label>
+                                <label for="Senha" class="form-label text-muted small fw-bold text-uppercase">Nova Senha</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light border-end-0 text-muted">
                                         <i class="fas fa-key"></i>
                                     </span>
-                                    <input type="password" name="senha" id="senha" class="form-control bg-light border-start-0" placeholder="Digite a nova senha" required>
+                                    <input type="password" name="senha" id="Senha" class="form-control bg-light border-start-0" placeholder="Digite a nova senha" required>
                                 </div>
                             </div>
 

@@ -25,8 +25,8 @@ class ResetSenhaController
         $expira = date('y-m-d H:i:s', strtotime('+1 hour'));
 
 
-        Reset_Senha::removerToken($email);
-        Reset_Senha::criarToken($email, $token, $expira);
+        ResetSenha::removerToken($email);
+        ResetSenha::criarToken($email, $token, $expira);
 
         $emailService = new EmailService();
         $envio_email = $emailService->enviarEmailRecuperacao($email, $token);
@@ -47,17 +47,17 @@ class ResetSenhaController
         $token = $_POST['token'];
         $nova_senha = $_POST['senha'];
 
-        $registro = Reset_Senha::buscarToken($token);
+        $registro = ResetSenha::buscarToken($token);
 
         if (!$registro) {
             die("Token inválido ou expirado. <br><a href='../form_login.php'>Clique Aqui para voltar</a>");
         } else {
 
             $hash = password_hash($nova_senha, PASSWORD_DEFAULT);
-            $conn = database::conectar();
+            $conn = DataBase::conectar();
             $stmt = $conn->prepare("UPDATE usuarios SET senha = :senha WHERE email = :email");
             $stmt->execute([':senha' => $hash, ':email' => $registro['email']]);
-            Reset_Senha::removerToken($registro['email']);
+            ResetSenha::removerToken($registro['email']);
             header('Location: ../form_login.php?sucesso=1');
             exit();
         }

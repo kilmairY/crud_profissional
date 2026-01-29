@@ -9,7 +9,7 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 
-$usuarios = UsuarioController::index();
+$dados = UsuarioController::index();
 ?>
 
 <!DOCTYPE html>
@@ -81,10 +81,11 @@ $usuarios = UsuarioController::index();
 
 <body>
 
+    <!-- Container principal da página -->
     <div class="container py-5">
-
         <div class="row mb-4 align-items-center">
 
+            <!-- título e info do usuário logado -->
             <div class="col-md-6">
                 <h2 class="fw-bold text-dark">Gerenciar Usuários</h2>
                 <p class="text-muted mb-0">
@@ -96,17 +97,20 @@ $usuarios = UsuarioController::index();
 
             <!-- botão de novo usuário -->
             <div class="col-md-6 text-end">
-                <a href="form_registro.php" class="btn btn-outline-primary shadow-sm px-4">
+                <a href="form_registro.php?Tipo_Usuario=admin" class="btn btn-primary shadow-sm">
                     <i class="fas fa-plus me-2"></i>Novo Usuário
                 </a>
             </div>
         </div>
 
-        <!-- quadro branco com sombra em volta da tabela -->
+        <!-- quadro branco -->
         <div class="card shadow border-0 mb-5">
             <div class="card-body p-0">
 
                 <!-- div para alinhar as informações em seus locais-->
+
+                <input class="form-control form-control-lg" type="text" id="busca" placeholder="Digite o nome ou email" style="padding: 10px; width:300px">
+
                 <table class="table table-hover table-borderless align-middle mb-0">
 
                     <thead class="bg-light border-bottom">
@@ -117,77 +121,136 @@ $usuarios = UsuarioController::index();
                             <th class="text-end pe-4 py-3 text-uppercase text-muted small fw-bold">Ações</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php foreach ($usuarios as $usuario): ?>
-                            <tr>
-                                <td class="ps-4 py-3">
-                                    <div class="d-flex align-items-center">
+                    <tbody id="resultado_busca">
+                    </tbody>
+                </table>
+            </div>
 
-                                        <!-- foto do usuario-->
-                                        <div class="avatar-placeholder me-3 shadow-sm">
-                                            <?php
-                                            echo htmlspecialchars(substr($usuario['nome'], 0, 2));
-                                            ?>
-                                        </div>
+        </div>
+        <nav aria-label="navegação de usuarios"
+            <ul class="pagination justify-content-center my-4">
+            </ul>
 
-                                        <div>
-                                            <div class="fw-bold text-dark"><?php echo htmlspecialchars($usuario['nome']); ?></div>
-                                            <div class="small text-muted"><?php echo htmlspecialchars($usuario['email']); ?></div>
-                                        </div>
-                                    </div>
-                                </td>
+        </nav>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const inputBusca = document.getElementById('busca');
+        const resultadoBusca = document.getElementById('resultado_busca');
+        const buscarUsuarios = async (termo, pagina) => {
+            const response = await fetch('Views/Buscar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    termo: termo,
+                    paginaAtual: pagina,
+                }),
+            });
+            const usuarios = await response.json();
+            atualizarTabela(usuarios.resultados);
+            paginacao(usuarios.paginas, usuarios.pagina_atual);
+        };
 
-                                <td class="text-muted fw-bold small">
-                                    #<?php echo htmlspecialchars($usuario['id']); ?>
-                                </td>
+        const paginacao = (totalPaginas, paginaAtual) => {
+            const paginacaoContainer = document.querySelector('.pagination');
+            paginacaoContainer.innerHTML = '';
 
-                                <td>
-                                    <span class="badge bg-light text-dark border">
-                                        <?php echo htmlspecialchars($usuario['idade']); ?> anos
-                                    </span>
-                                </td>
+            for (let i = 1; i <= totalPaginas; i++) {
+                let paginaAtualHtml = i === paginaAtual ? 'active' : '';
+                paginacaoContainer.innerHTML +=`
+                <li class="page-item ${paginaAtualHtml}">
+                    <button class="page-link btn-pagina" data-pagina="${i}">
+                        ${i}
+                    </button>
+                </li>
+                `;
+            }
 
-                                <td class="text-end pe-4">
-                                    <div class="dropdown">
-                                        <button class="btn btn-outline-light btn-sm text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </button>
+        // Adiciona os eventos após criar os botões de paginação
+        const btnPaginas = document.querySelectorAll('.btn-pagina');
+        btnPaginas.forEach(botao => {
+            botao.addEventListener('click', function(e) {
+                let termo = inputBusca.value;
+                let pagina = botao.getAttribute('data-pagina');
+                buscarUsuarios(termo, pagina);
+            });
+        });
+        };
 
-                                        <!-- botão lateral das Ações -->
-                                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
-                                            <li>
-                                                <a class="dropdown-item small" href="form_editar.php?id=<?php echo $usuario['id']; ?>">
+        const atualizarTabela = (usuarios) => {
+            resultadoBusca.innerHTML = '';
+
+            if (!usuarios || usuarios.length === 0) {
+                resultadoBusca.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="text-center py-5 text-muted">
+                            <i class="fas fa-users mb-3" style="font-size: 2rem; opacity: 0.3;"></i><br>
+                            Nenhum usuário encontrado.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            usuarios.forEach(usuario => {
+                resultadoBusca.innerHTML += `
+                    <tr>
+                        <td class="ps-4 py-3">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-placeholder me-3 shadow-sm">
+                                    ${usuario.Nome || usuario.nome ? usuario.Nome.charAt(0).toUpperCase() + (usuario.Nome.charAt(1) ? usuario.Nome.charAt(1).toUpperCase() : '') : ''}
+                                </div>
+                                <div>
+                                    <div class="fw-bold text-dark">${usuario.Nome || usuario.nome}</div>
+                                    <div class="small text-muted">${usuario.Email || usuario.email}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-muted fw-bold small">#${usuario.Id || usuario.id}</td>
+                        <td><span class="badge bg-light text-dark border">${usuario.Idade || usuario.idade} anos</span></td>
+                        <td class="text-end pe-4">
+                           <div class="dropdown">
+                                <button class="btn btn-outline-light btn-sm text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                 </button>
+                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+                                        <li>
+                                                <a href="form_editar.php?Id=${usuario.Id || usuario.id}" class="dropdown-item small">
                                                     <i class="fas fa-edit me-2 text-primary"></i> Editar
-                                                </a>
+                                                 </a>
                                             </li>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
                                             <li>
-                                                <a class="dropdown-item small text-danger" 
-                                                        href="Views/deletar.php?id=
-                                                        <?php echo $usuario['id']; ?>" onclick="return confirm('Tem certeza que deseja deletar?');">
-                                                    <i class="fas fa-trash-alt me-2"></i> Deletar
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                                            <a href="Views/deletar.php?Id=${usuario.Id || usuario.id}" class="dropdown-item small text-danger" onclick="return confirm('Tem certeza que deseja deletar?');">
+                                                <i class="fas fa-trash-alt me-2"></i> Deletar
+                                            </a>
+                                        </li>
+                                </ul>
+                            </div> 
+                        </td>
+                     </tr>
+                `;
+            });
 
-                        <?php if (empty($usuarios)): ?>
-                            <tr>
-                                <td colspan="4" class="text-center py-5 text-muted">
-                                    <i class="fas fa-users mb-3" style="font-size: 2rem; opacity: 0.3;"></i><br>
-                                    Nenhum usuário encontrado.
-                                </td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        };
+
+        let timeout = null;
+
+        
+        inputBusca.addEventListener('input', (e) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                const termo = e.target.value;
+                buscarUsuarios(termo, 1);
+            }, 500); // Espera
+        });
+
+        buscarUsuarios('', 1);
+        
+    </script>
 </body>
