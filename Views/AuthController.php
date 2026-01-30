@@ -23,7 +23,7 @@ class AuthController {
                 'email' => $usuario['Email'],
                 'tipo_usuario'=> $usuario['Tipo_Usuario'],
             ];
-            header('Location: ../index.php');
+            header('Location: ../form_inicio.php');
         } elseif ($usuario->status === 'not_verified') {
             header('Location: ../form_login.php?erro_verificacao=1&email=' . urlencode($usuario->email));
             exit();

@@ -1,5 +1,7 @@
 <?php
 session_start();
+include("Views/VerificaAdmin.php");
+
 if (!isset($_SESSION['usuario'])) {
     header('Location: form_login.php');
     exit();

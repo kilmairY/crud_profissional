@@ -1,6 +1,10 @@
 <?php
+
+session_start();
+
 header('Content-Type: application/json');
 require_once __DIR__ . '/../Dados/db.php';
+require_once __DIR__ . '/../Components/GridAdmin.php';
 
 $conn = DataBase::conectar();
 $pdo = $conn;
@@ -27,6 +31,11 @@ if(!empty($termoBusca)){
     $stmt->execute();
 
     $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $grid = new GridAdmin();
+        $html = $grid->GridAdminHtml($resultados);
+
+
 }else{
    
     $stmt1 = $pdo->prepare("SELECT * FROM usuarios");
@@ -36,12 +45,15 @@ if(!empty($termoBusca)){
 
     $stmt = $pdo->query("SELECT * FROM usuarios LIMIT 10 OFFSET $offset");
     $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $grid = new GridAdmin();
+    $html = $grid->GridAdminHtml($resultados);
 }
 
 $retorno = [
     'pagina_atual' => (int)$paginaAtual,
     'paginas' => $totalPaginas,
-    'resultados' => $resultados
+    'resultados' => $html
 ];
 
 echo json_encode($retorno);

@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require_once __DIR__ . '/Dados/db.php';
 require_once __DIR__ . '/Views/UsuarioController.php';
@@ -97,7 +98,7 @@ $dados = UsuarioController::index();
 
             <!-- botão de novo usuário -->
             <div class="col-md-6 text-end">
-                <a href="form_registro.php?Tipo_Usuario=admin" class="btn btn-primary shadow-sm">
+                <a href="form_registro.php?" class="btn btn-primary shadow-sm">
                     <i class="fas fa-plus me-2"></i>Novo Usuário
                 </a>
             </div>
@@ -106,11 +107,18 @@ $dados = UsuarioController::index();
         <!-- quadro branco -->
         <div class="card shadow border-0 mb-5">
             <div class="card-body p-0">
-
-                <!-- div para alinhar as informações em seus locais-->
-
-                <input class="form-control form-control-lg" type="text" id="busca" placeholder="Digite o nome ou email" style="padding: 10px; width:300px">
-
+                <div class="row align-items-center p-4 border-bottom">
+                    <div class="col-md-6 text-start p-4">
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2" type="search" id="busca" placeholder="Digite o nome ou email" style="padding: 10px; width:300px">
+                        </form>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <a href="form_inicio.php?" class="btn btn-primary shadow-sm">
+                            <i class="fas fa-home me-2"></i>Início
+                        </a>
+                    </div>
+                </div>
                 <table class="table table-hover table-borderless align-middle mb-0">
 
                     <thead class="bg-light border-bottom">
@@ -122,15 +130,14 @@ $dados = UsuarioController::index();
                         </tr>
                     </thead>
                     <tbody id="resultado_busca">
+
                     </tbody>
                 </table>
             </div>
-
         </div>
         <nav aria-label="navegação de usuarios"
             <ul class="pagination justify-content-center my-4">
             </ul>
-
         </nav>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -145,9 +152,10 @@ $dados = UsuarioController::index();
                 },
                 body: JSON.stringify({
                     termo: termo,
-                    paginaAtual: pagina,
+                    paginaAtual: pagina
                 }),
             });
+
             const usuarios = await response.json();
             atualizarTabela(usuarios.resultados);
             paginacao(usuarios.paginas, usuarios.pagina_atual);
@@ -159,7 +167,7 @@ $dados = UsuarioController::index();
 
             for (let i = 1; i <= totalPaginas; i++) {
                 let paginaAtualHtml = i === paginaAtual ? 'active' : '';
-                paginacaoContainer.innerHTML +=`
+                paginacaoContainer.innerHTML += `
                 <li class="page-item ${paginaAtualHtml}">
                     <button class="page-link btn-pagina" data-pagina="${i}">
                         ${i}
@@ -168,80 +176,65 @@ $dados = UsuarioController::index();
                 `;
             }
 
-        // Adiciona os eventos após criar os botões de paginação
-        const btnPaginas = document.querySelectorAll('.btn-pagina');
-        btnPaginas.forEach(botao => {
-            botao.addEventListener('click', function(e) {
-                let termo = inputBusca.value;
-                let pagina = botao.getAttribute('data-pagina');
-                buscarUsuarios(termo, pagina);
+            const btnPaginas = document.querySelectorAll('.btn-pagina');
+            btnPaginas.forEach(botao => {
+                botao.addEventListener('click', function(e) {
+                    let termo = inputBusca.value;
+                    let pagina = botao.getAttribute('data-pagina');
+                    buscarUsuarios(termo, pagina);
+                });
             });
-        });
         };
 
         const atualizarTabela = (usuarios) => {
-            resultadoBusca.innerHTML = '';
+            resultadoBusca.innerHTML = usuarios;
+        //     <tr>
+        //         <td class="ps-4 py-3">
+        //             <div class="d-flex align-items-center">
+        //                 <div class="avatar-placeholder me-3 shadow-sm">
+        //                     ${usuario.Nome || usuario.nome ? usuario.Nome.charAt(0).toUpperCase() + (usuario.Nome.charAt(1) ? usuario.Nome.charAt(1).toUpperCase() : '') : ''}
+        //                 <div>
+        //                     <div class="fw-bold text-dark">${usuario.Nome || usuario.nome}</div>
+        //                     <div class="small text-muted">${usuario.Email || usuario.email}</div>
+        //                 </div>
+        //                 </div>
+        //             </div>
+        //         </td>
+        //             <td class="text-muted fw-bold small">#${usuario.Id || usuario.id}</td>
+        //             <td><span class="badge bg-light text-dark border">${usuario.Idade || usuario.idade} anos</span></td>
+        //             <td class="text-end pe-4">
+        //         </td>
+        //         <div class="dropdown">
+        //             <button class="btn btn-outline-light btn-sm text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        //                 <i class="fas fa-ellipsis-v"></i>
+        //             </button>
+        
+        //         <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+        //             <li>
+        //                 <a href="form_editar.php?Id=${usuario.Id || usuario.id}" class="dropdown-item small">
+        //                     <i class="fas fa-edit me-2 text-primary"></i> Editar
+        //                 </a>
+        //             </li>
+        //             <li>
+        //                 <hr class="dropdown-divider"> </hr>
+        //             </li>
+        //             <li>
+        //                 <a href="Views/deletar.php?Id=${usuario.Id || usuario.id}" class="dropdown-item small text-danger" onclick="return confirm('Tem certeza que deseja deletar?');">
+        //                     <i class="fas fa-trash-alt me-2"></i> Deletar
+        //                 </a>
+        //             </li>
+        //         </ul>
+        //     </div>
+        // </tr>
 
-            if (!usuarios || usuarios.length === 0) {
-                resultadoBusca.innerHTML = `
-                    <tr>
-                        <td colspan="4" class="text-center py-5 text-muted">
-                            <i class="fas fa-users mb-3" style="font-size: 2rem; opacity: 0.3;"></i><br>
-                            Nenhum usuário encontrado.
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            usuarios.forEach(usuario => {
-                resultadoBusca.innerHTML += `
-                    <tr>
-                        <td class="ps-4 py-3">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-placeholder me-3 shadow-sm">
-                                    ${usuario.Nome || usuario.nome ? usuario.Nome.charAt(0).toUpperCase() + (usuario.Nome.charAt(1) ? usuario.Nome.charAt(1).toUpperCase() : '') : ''}
-                                </div>
-                                <div>
-                                    <div class="fw-bold text-dark">${usuario.Nome || usuario.nome}</div>
-                                    <div class="small text-muted">${usuario.Email || usuario.email}</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-muted fw-bold small">#${usuario.Id || usuario.id}</td>
-                        <td><span class="badge bg-light text-dark border">${usuario.Idade || usuario.idade} anos</span></td>
-                        <td class="text-end pe-4">
-                           <div class="dropdown">
-                                <button class="btn btn-outline-light btn-sm text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
-                                        <li>
-                                                <a href="form_editar.php?Id=${usuario.Id || usuario.id}" class="dropdown-item small">
-                                                    <i class="fas fa-edit me-2 text-primary"></i> Editar
-                                                 </a>
-                                            </li>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <li>
-                                            <a href="Views/deletar.php?Id=${usuario.Id || usuario.id}" class="dropdown-item small text-danger" onclick="return confirm('Tem certeza que deseja deletar?');">
-                                                <i class="fas fa-trash-alt me-2"></i> Deletar
-                                            </a>
-                                        </li>
-                                </ul>
-                            </div> 
-                        </td>
-                     </tr>
-                `;
-            });
+    
 
 
         };
 
         let timeout = null;
 
-        
+
         inputBusca.addEventListener('input', (e) => {
             clearTimeout(timeout);
             timeout = setTimeout(() => {
@@ -251,6 +244,5 @@ $dados = UsuarioController::index();
         });
 
         buscarUsuarios('', 1);
-        
     </script>
 </body>

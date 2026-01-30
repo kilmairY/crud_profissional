@@ -1,4 +1,8 @@
-<?php session_start(); session_destroy(); ?>
+<?php
+if (isset($_GET['Sessao']) && $_GET['Sessao'] == 1) {
+session_destroy();
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 

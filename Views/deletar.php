@@ -1,9 +1,8 @@
 <?php
+
 session_start();
-if (!isset($_SESSION['usuario'])) {
-    header('Location: ../form_login.php');
-    exit();
-}
+include("VerificaAdmin.php");
+
 require_once __DIR__ . '/../Dados/db.php';
 require_once __DIR__ . '/UsuarioController.php';
 

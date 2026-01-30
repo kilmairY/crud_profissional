@@ -58,6 +58,14 @@ session_start();
 
                 <!-- card branco em volta da label -->
                 <div class="card shadow-lg border-0">
+                <?php if (isset($_SESSION["usuario"]) && $_SESSION["usuario"]) { ?>
+                    <div class="col-md-12 text-end border-0 p-2">
+                        <a href="form_inicio.php?" class="btn btn-primary shadow-sm">
+                            <i class="fas fa-home me-2"></i>Início
+                        </a>
+                    </div>
+                <?php } ?>
+
                     <div class="card-body p-4">
 
                         <div class="text-center mb-4">
@@ -67,6 +75,7 @@ session_start();
                             <h3 class="fw-bold text-dark">Criar Conta</h3>
                             <p class="text-muted small">Preencha os dados abaixo para começar.</p>
                         </div>
+
 
                         <?php if (isset($_GET['erro']) && $_GET['erro'] == 1): ?>
                             <div class="alert alert-danger d-flex align-items-center small" role="alert">
@@ -81,7 +90,7 @@ session_start();
                             </div>
                         <?php endif; ?>
 
-                        <?php if (isset($_GET['erro_email'])&& $_GET['erro_email'] == 1): ?>
+                        <?php if (isset($_GET['erro_email']) && $_GET['erro_email'] == 1): ?>
                             <div class="alert alert-danger d-flex align-items-center small" role="alert">
                                 <i class="fas fa-exclamation-circle me-2"></i>
                                 <div>Ocorreu um erro ao enviar o e-mail de confirmação</div>
@@ -141,7 +150,7 @@ session_start();
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                     <input type="password"
-                                        name="Senha"    
+                                        name="Senha"
                                         class="form-control"
                                         placeholder="Crie uma senha forte"
                                         required>
@@ -149,23 +158,23 @@ session_start();
                             </div>
 
                             <!-- tipo de usuario -->
-                             <?php if (isset($_SESSION['usuario']) && isset($_SESSION['usuario']['tipo_usuario']) && $_SESSION['usuario']['tipo_usuario'] === 'admin'): ?>
-                                    <div class="mb-4">
-                                        <label class="form-label text-muted small fw-bold text-uppercase">Tipo de Usuário</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-users-cog"></i></span>
-                                            <select name="Tipo_Usuario" class="form-select" required>
-                                                <option value="" disabled selected>Selecione o tipo de usuário</option>
-                                                <option value="admin">Administrador</option>
-                                                <option value="usuario">Usuário Comum</option>
-                                            </select>
-                                        </div>
+                            <?php if (isset($_SESSION['usuario']) && isset($_SESSION['usuario']['tipo_usuario']) && $_SESSION['usuario']['tipo_usuario'] === 'admin'): ?>
+                                <div class="mb-4">
+                                    <label class="form-label text-muted small fw-bold text-uppercase">Tipo de Usuário</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-users-cog"></i></span>
+                                        <select name="Tipo_Usuario" class="form-select" required>
+                                            <option value="" disabled selected>Selecione o tipo de usuário</option>
+                                            <option value="admin">Administrador</option>
+                                            <option value="usuario">Usuário Comum</option>
+                                        </select>
                                     </div>
+                                </div>
                             <?php else: ?>
-                                    <input type="hidden" name="Tipo_Usuario" value="usuario">
+                                <input type="hidden" name="Tipo_Usuario" value="usuario">
                             <?php endif; ?>
                             <!-- botão registrar -->
-                             
+
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary py-2 fw-bold shadow-sm">
                                     Registrar-se

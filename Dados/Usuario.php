@@ -5,7 +5,7 @@ class Usuario
 {
     public static function listar()
     {
-        $conn = database::conectar();
+        $conn = DataBase::conectar();
         $itensPorPagina = 10;
         $paginaAtual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 
@@ -86,4 +86,4 @@ class Usuario
         $stmt->bindParam(':Id', $id);
         return $stmt->execute();
     }
-}
+} 
