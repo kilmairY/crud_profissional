@@ -20,11 +20,12 @@ if (isset($_GET['token'])) {
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Confirmação de E-mail</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 	<style>
 		body {
@@ -35,9 +36,11 @@ if (isset($_GET['token'])) {
 			align-items: center;
 			justify-content: center;
 		}
+
 		.card {
 			border-radius: 1rem;
 		}
+
 		.icon-circle {
 			width: 70px;
 			height: 70px;
@@ -51,6 +54,7 @@ if (isset($_GET['token'])) {
 		}
 	</style>
 </head>
+
 <body>
 	<div class="container">
 		<div class="row justify-content-center">
@@ -59,11 +63,19 @@ if (isset($_GET['token'])) {
 					<div class="card-body">
 						<div class="text-center">
 							<div class="icon-circle shadow-sm mb-3">
-								<i class="fas fa-check-circle fa-2x <?php if($sucesso ?? false) { echo 'text-success'; } else { echo 'text-danger'; } ?>"></i>
+								<i class="fas fa-check-circle fa-2x <?php if ($sucesso ?? false) {
+																		echo 'text-success';
+																	} else {
+																		echo 'text-danger';
+																	} ?>"></i>
 							</div>
-							<h3 class="fw-bold text-dark mb-3">Confirmação de E-mail</h3>
-							<p class="<?php if($sucesso ?? false) { echo 'text-success'; } else { echo 'text-danger'; } ?> fw-semibold mb-4"><?php echo $mensagem; ?></p>
-							<a href="form_login.php" class="btn btn-primary w-100"><i class="fas fa-sign-in-alt me-2"></i>Ir para o login</a>
+							<h3 class="font-weight-bold text-dark mb-3">Confirmação de E-mail</h3>
+							<p class="<?php if ($sucesso ?? false) {
+											echo 'text-success';
+										} else {
+											echo 'text-danger';
+										} ?> mb-4"><?php echo $mensagem; ?></p>
+							<a href="form_login.php" class="btn btn-primary w-100"><i class="fas fa-sign-in-alt mr-2"></i>Ir para o login</a>
 						</div>
 					</div>
 				</div>
@@ -71,4 +83,5 @@ if (isset($_GET['token'])) {
 		</div>
 	</div>
 </body>
+
 </html>

@@ -1,7 +1,12 @@
 <?php
 
 
+Class VerificaAdmin {
+public function __construct() {
+    session_start();
+}
 
+public static function verificarAcesso() {
 if (!isset($_SESSION["usuario"]['id'])) {
     header('Content-Type: application/json');
     http_response_code(401);
@@ -19,5 +24,7 @@ if (empty($_SESSION["usuario"]['tipo_usuario']) || $_SESSION["usuario"]['tipo_us
         'error' => 'Acesso negado. Você precisa ser administrador para acessar esta página.'
     ]);
     exit;
+}
+}
 }
 ?>

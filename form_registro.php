@@ -1,5 +1,12 @@
 <?php
+
 session_start();
+
+if (!$_SESSION["usuario"]) {
+    header("Location: form_login.php");
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -8,14 +15,14 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="Arquivos/responsive.css">
 
     <style>
         body {
             background-color: #f4f6f9;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* Centraliza verticalmente */
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -58,13 +65,13 @@ session_start();
 
                 <!-- card branco em volta da label -->
                 <div class="card shadow-lg border-0">
-                <?php if (isset($_SESSION["usuario"]) && $_SESSION["usuario"]) { ?>
-                    <div class="col-md-12 text-end border-0 p-2">
-                        <a href="form_inicio.php?" class="btn btn-primary shadow-sm">
-                            <i class="fas fa-home me-2"></i>Início
-                        </a>
-                    </div>
-                <?php } ?>
+                    <?php if (isset($_SESSION["usuario"]) && $_SESSION["usuario"]) { ?>
+                        <div class="col-md-12 text-end border-0 p-2">
+                            <a href="form_inicio.php?" class="btn btn-primary shadow-sm">
+                                <i class="fas fa-home me-2"></i>Início
+                            </a>
+                        </div>
+                    <?php } ?>
 
                     <div class="card-body p-4">
 
@@ -85,8 +92,8 @@ session_start();
 
                         <?php elseif (isset($_GET['sucesso']) && $_GET['sucesso'] == 1): ?>
                             <div class="alert alert-success d-flex align-items-center small" role="alert">
-                                <i class="fas fa-check-circle me-2"></i>
-                                <div>Registro realizado com sucesso! <a href="form_login.php" class="fw-bold text-success">Faça login.</a></div>
+                                <i class="fas fa-check-circle mr-2"></i>
+                                <div>Registro realizado com sucesso! <a href="form_login.php" class="font-weight-bold text-success">Faça login.</a></div>
                             </div>
                         <?php endif; ?>
 
@@ -102,7 +109,7 @@ session_start();
 
                             <!--Nome -->
                             <div class="mb-3">
-                                <label class="form-label text-muted small fw-bold text-uppercase">Nome Completo</label>
+                                <label class="form-label text-muted small font-weight-bold text-uppercase">Nome Completo</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                     <input type="text"
@@ -116,7 +123,7 @@ session_start();
                             <div class="row">
                                 <!--idade -->
                                 <div class="col-4 mb-3">
-                                    <label class="form-label text-muted small fw-bold text-uppercase">Idade</label>
+                                    <label class="form-label text-muted small font-weight-bold text-uppercase">Idade</label>
                                     <div class="input-group">
                                         <span class="input-group-text px-2"><i class="fas fa-birthday-cake"></i></span>
                                         <input type="number"
@@ -134,7 +141,7 @@ session_start();
                                 </div>
                                 <!--email -->
                                 <div class="col-8 mb-3">
-                                    <label class="form-label text-muted small fw-bold text-uppercase">Email</label>
+                                    <label class="form-label text-muted small font-weight-bold text-uppercase">Email</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                         <input type="email"
@@ -201,7 +208,8 @@ session_start();
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     <script>
         function validarIdade(input) {
             const idade = parseInt(input.value);

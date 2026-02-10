@@ -17,7 +17,7 @@ class Auth
     }
 
 
-    // Registra um novo usuário e envia e-mail de confirmação
+
     public static function registrar($nome, $idade, $email, $senha, $tipoUsuario)
     {
         require_once __DIR__ . '/Confirm.php';
@@ -25,12 +25,9 @@ class Auth
 
         $hash = password_hash($senha, PASSWORD_DEFAULT);
         
-        // Gera token de confirmação para o novo usuário
         $token = Confirm::gerarToken($email);
 
-        // Envia e-mail de confirmação com o token gerado
         $emailService = new EmailService();
-        
         $resultadoEmail = $emailService->enviarEmailConfirmacao($email, $token);
         // Se houve erro ao enviar o e-mail, redireciona com erro
         if ($resultadoEmail !== true) {
@@ -38,7 +35,7 @@ class Auth
             exit();
         }
 
-        // Só registra o usuário se o e-mail for válido e o envio do e-mail foi bem-sucedido
+        // Se e-mail foi bem-sucedido cadastra o usuário no banco
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $conn = DataBase::conectar();
 

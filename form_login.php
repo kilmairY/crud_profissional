@@ -1,6 +1,7 @@
 <?php
+// Destroi sessão
 if (isset($_GET['Sessao']) && $_GET['Sessao'] == 1) {
-session_destroy();
+    session_destroy();
 }
 ?>
 <!DOCTYPE html>
@@ -10,21 +11,17 @@ session_destroy();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
         body {
             background-color: #f4f6f9;
-            /* Fundo cinza claro padrão */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
-            /* Altura total da tela */
             display: flex;
             align-items: center;
-            /* Centraliza verticalmente */
             justify-content: center;
-            /* Centraliza horizontalmente */
         }
 
         .card {
@@ -32,14 +29,11 @@ session_destroy();
             /* Bordas arredondadas */
         }
 
-        /* Estilo do Círculo do Ícone */
         .icon-circle {
             width: 80px;
             height: 80px;
             background-color: #e7f1ff;
-            /* Azul bem clarinho */
             color: #0d6efd;
-            /* Azul primário */
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -48,7 +42,6 @@ session_destroy();
             transition: transform 0.3s;
         }
 
-        /* Pequena animação ao passar o mouse no card */
         .card:hover .icon-circle {
             transform: scale(1.05);
         }
@@ -79,14 +72,14 @@ session_destroy();
 
                         <?php if (isset($_GET['erro'])): ?>
                             <div class="alert alert-danger d-flex align-items-center small" role="alert">
-                                <i class="fas fa-exclamation-circle me-2"></i>
+                                <i class="fas fa-exclamation-circle mr-2"></i>
                                 <div>Email ou senha inválidos.</div>
                             </div>
                         <?php endif; ?>
 
                         <?php if (isset($_GET['cadastro_sucesso']) && $_GET['cadastro_sucesso'] == 1): ?>
                             <div class="alert alert-success d-flex align-items-center small" role="alert">
-                                <i class="fas fa-check-circle me-2"></i>
+                                <i class="fas fa-check-circle mr-2"></i>
                                 <div>Cadastro realizado com sucesso! Por favor, verifique seu e-mail para confirmar sua conta.</div>
                             </div>
                         <?php endif; ?>
@@ -94,10 +87,10 @@ session_destroy();
                         <?php if (isset($_GET['erro_verificacao']) && $_GET['erro_verificacao'] == 1): ?>
                             <div class="alert alert-danger d-flex align-items-center small d-flex flex-column" role="alert">
                                 <div class="d-flex align-items-center">
-                                    <i class="fas fa-exclamation-circle me-2"></i>
+                                    <i class="fas fa-exclamation-circle mr-2"></i>
                                     <p class="small text-center mb-1">Sua conta ainda não foi verificada.</p>
                                 </div>
-                                <a href="Views/ReenviarVerificacao.php?email=<?php echo urlencode($_GET['email']); ?>" class="small text-decoration-none text-muted"><br>Reenviar e-mail de verificação</br></a>
+                                <a href="Views/ReenviarVerificacao.php?email=<?php echo urlencode($_GET['email']); ?>" class="small text-muted"><br>Reenviar e-mail de verificação</br></a>
                             </div>
                         <?php endif; ?>
 
@@ -132,7 +125,7 @@ session_destroy();
                         <form method="POST" action="Views/LoginAcao.php">
 
                             <div class="mb-3">
-                                <label for="email" class="form-label text-muted small fw-bold text-uppercase">Email</label>
+                                <label for="email" class="form-label text-muted small font-weight-bold text-uppercase">Email</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light border-end-0 text-muted">
                                         <i class="fas fa-envelope"></i>
@@ -183,7 +176,8 @@ session_destroy();
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 </body>
 
 </html>
