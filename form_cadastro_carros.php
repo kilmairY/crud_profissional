@@ -1,4 +1,3 @@
-
 <?php
 // Importa dependências e inicia sessão
 require_once __DIR__ . '/Dados/db.php';
@@ -57,124 +56,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <style>
-        body {
-            background: linear-gradient(to bottom, #f4f6f9 0%, #e9ecef 100%);
-            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            padding: 40px 0;
-        }
-
-        .card {
-            border-radius: 1.5rem;
-            border: none;
-            min-width: 500px;
-            min-height: 600px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            animation: slideUp 0.5s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .form-label,
-        .form-group label {
-            font-size: 1.2rem;
-            font-weight: 500;
-        }
-
-        .form-check-label {
-            font-size: 1.1rem;
-        }
-
-        .form-control,
-        .form-select {
-            border-radius: 10px;
-            border: 2px solid #e9ecef;
-            padding: 10px 15px;
-            transition: all 0.3s ease;
-        }
-
-        select.form-control {
-            width: 100%;
-            min-width: 200px;
-            max-width: 100%;
-            white-space: normal;
-            overflow: visible;
-            text-overflow: clip;
-            padding-right: 35px;
-        }
-
-        select.form-control option {
-            padding: 10px;
-            white-space: normal;
-            overflow-wrap: break-word;
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #0068bd 100%);
-            border: none;
-            border-radius: 10px;
-            padding: 12px 20px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-outline-secondary {
-            border: 2px solid #6c757d;
-            color: #6c757d;
-            border-radius: 10px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-outline-secondary:hover {
-            background: #6c757d;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .imagem-preview {
-            width: 100%;
-            height: 220px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #aaa;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 2px dashed #dee2e6;
-            transition: all 0.3s ease;
-        }
-
-        .imagem-preview:hover {
-            border-color: #667eea;
-            background: linear-gradient(135deg, #f0f4ff 0%, #e9ecef 100%);
-        }
-    </style>
+    <link rel="stylesheet" href="Assets/CSS/form_cadastro_carros.css">
 </head>
 
 <body>
@@ -234,7 +116,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                             <div class="row mb-3">
                                 <div class="col-md-6 form-group">
                                     <label for="marcaCarro">Selecione a Marca</label>
-                                    <select class="form-control" id="marca" name="marca_id" required>
+                                    <select class="select-marca" id="marca" name="marca_id" required>
                                         <option value="">-- Selecione --</option>
                                         <?php foreach ($marcas as $marca): ?>
                                             <option value="<?= htmlspecialchars($marca['id']) ?>" <?= $editMode && $carro['marca_id'] == $marca['id'] ? 'selected' : '' ?>><?= htmlspecialchars($marca['nome']) ?></option>
@@ -243,7 +125,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="modeloCarro">Selecione o Modelo</label>
-                                    <select class="form-control" id="modeloCarro" name="modelo_id" required <?= $editMode ? '' : 'disabled' ?>>
+                                    <select class="select-modelo" id="modeloCarro" name="modelo_id" required <?= $editMode ? '' : 'disabled' ?>>
                                         <option value="">-- Selecione o modelo --</option>
                                         <?php if ($editMode): ?>
                                             <?php foreach ($modelos as $modelo): ?>
@@ -254,128 +136,139 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <div class="row-md-12">
-                                    <label class="form-label">Cor</label><br>
-                                    <input type="hidden" name="cor" id="cor" value="<?= htmlspecialchars($carro['cor']) ?>" required>
-                                    <div class="col-md-2 form-check form-check-inline">
-                                        <button type="button" class="btn btn-outline-dark btn-lg text-black btnSelecionaCor p-4" data-cor="Preto" id="corPreto">
-                                            <span style="display:inline-block;width:20px;height:20px;background:#222;border:1px solid #ccc;margin-right:6px;"></span>Preto
-                                        </button>
-                                    </div>
-                                    <div class="col-md-2 form-check form-check-inline">
-                                        <button type="button" class="btn btn-outline-success btn-lg text-black btnSelecionaCor p-4" data-cor="Verde" id="corVerde">
-                                            <span style="display:inline-block;width:20px;height:20px;background:#008000;border:1px solid #ccc;margin-right:6px;"></span>Verde
-                                        </button>
-                                    </div>
-                                    <div class="col-md-2 form-check form-check-inline">
-                                        <button type="button" class="btn btn-outline-secondary btn-lg text-dark btnSelecionaCor p-4" data-cor="Prata" id="corPrata">
-                                            <span style="display:inline-block;width:20px;height:20px;background:linear-gradient(135deg,#eee 60%,#aaa 100%);border:1px solid #ccc;margin-right:6px;"></span>Prata
-                                        </button>
-                                    </div>
-                                    <div class="col-md-3 form-check form-check-inline">
-                                        <button type="button" class="btn btn-outline-danger btn-lg text-black btnSelecionaCor p-4" data-cor="Vermelho" id="corVermelho">
-                                            <span style="display:inline-block;width:20px;height:20px;background:#c00;border:1px solid #ccc;margin-right:6px;"></span>Vermelho
-                                        </button>
-                                    </div>
-                                    <div class="col-md-2 form-check form-check-inline">
-                                        <button type="button" class="btn btn-outline-primary btn-lg text-black btnSelecionaCor p-4" data-cor="Azul" id="corAzul">
-                                            <span style="display:inline-block;width:20px;height:20px;background:#007bff;border:1px solid #ccc;margin-right:6px;"></span>Azul
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="ano" class="form-label">Ano</label>
-                                    <input type="number" class="form-control" id="ano" name="ano" min="1900" max="<?= date('Y') ?>" value="<?= htmlspecialchars($carro['ano']) ?>" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="valor" class="form-label">Valor</label>
-                                    <input type="text" class="form-control" id="valor" name="valor" min="0" step="0.01" placeholder="R$0.00" oninput="maskMoney(this)" value="<?= htmlspecialchars($carro['preco']) ?>" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <?php if ($editMode): ?>
-                                    <!-- IMAGENS ATUAIS -->
-                                    <div class="col-md-12 mb-3">
-                                        <label class="form-label">Imagens Atuais</label>
-                                        <div class="row" id="imagensAtuais">
-                                            <?php
-                                            require_once __DIR__ . '/Dados/ImagensCarros.php';
-                                            $imagens = ImagensCarros::buscarPorCarro($carro['id']);
-
-                                            if (!empty($imagens)):
-                                                foreach ($imagens as $img):
-                                            ?>
-                                                    <div class="col-md-3 mb-3 imagem-item" data-img-id="<?= $img['id'] ?>">
-                                                        <div class="card">
-                                                            <img src="Arquivos/<?= htmlspecialchars($img['nome_arquivo']) ?>"
-                                                                class="card-img-top"
-                                                                style="height: 150px; object-fit: cover;">
-                                                            <div class="card-body p-2 text-center">
-                                                                <?php if ($img['is_principal']): ?>
-                                                                    <span class="badge badge-primary mb-2">Principal</span>
-                                                                <?php else: ?>
-                                                                    <button type="button"
-                                                                        class="btn btn-sm btn-outline-primary btn-definir-principal mb-2"
-                                                                        data-img-id="<?= $img['id'] ?>">
-                                                                        Definir como Principal
-                                                                    </button>
-                                                                <?php endif; ?>
-                                                                <br>
-                                                                <button type="button"
-                                                                    class="btn btn-sm btn-danger btn-deletar-imagem"
-                                                                    data-img-id="<?= $img['id'] ?>">
-                                                                    <i class="fas fa-trash"></i> Excluir
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                <?php
-                                                endforeach;
-                                            else:
-                                                ?>
-                                                <div class="col-12">
-                                                    <p class="text-muted">Nenhuma imagem cadastrada</p>
-                                                </div>
-                                            <?php endif; ?>
+                                <label class="form-label">Cor</label><br>
+                                <input type="hidden" name="cor" id="cor" value="<?= htmlspecialchars($carro['cor']) ?>" required>
+                                <div class="row">
+                                    <div class="col-12 col-md m-4">
+                                        <div class="form-check form-check-inline">
+                                            <button type="button" class="btn btn-outline-dark text-black btnSelecionaCor p-4" data-cor="Preto" id="corPreto">
+                                                <span style="display:inline-block;width:20px;height:20px;background:#222;border:1px solid #ccc;margin-right:6px;"></span>Preto
+                                            </button>
                                         </div>
                                     </div>
-                                <?php endif; ?>
-
-                                <!-- UPLOAD DE NOVAS IMAGENS -->
-                                <div class="col-md-12">
-                                    <label for="imagensCarro" class="form-label">
-                                        <?= $editMode ? 'Adicionar Mais Imagens' : 'Imagens do Carro' ?>
-                                    </label>
-                                    <input type="file"
-                                        class="form-control"
-                                        id="imagensCarro"
-                                        name="imagens[]"
-                                        accept="image/*"
-                                        multiple
-                                        <?= $editMode ? '' : 'required' ?>>
-                                    <small class="text-muted">Você pode selecionar múltiplas imagens</small>
-
-                                    <!-- Preview das imagens selecionadas -->
-                                    <div id="previewNovasImagens" class="row mt-3"></div>
+                                    <div class="col-12 col-md m-4">
+                                        <div class="form-check form-check-inline">
+                                            <button type="button" class="btn btn-outline-success text-black btnSelecionaCor p-4" data-cor="Verde" id="corVerde">
+                                                <span style="display:inline-block;width:20px;height:20px;background:#008000;border:1px solid #ccc;margin-right:6px;"></span>Verde
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md m-4">
+                                        <div class=" form-check form-check-inline">
+                                            <button type="button" class="btn btn-outline-secondary text-dark btnSelecionaCor p-4" data-cor="Prata" id="corPrata">
+                                                <span style="display:inline-block;width:20px;height:20px;background:linear-gradient(135deg,#eee 60%,#aaa 100%);border:1px solid #ccc;margin-right:6px;"></span>Prata
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md m-4">
+                                        <div class="form-check form-check-inline">
+                                            <button type="button" class="btn btn-outline-danger text-black btnSelecionaCor p-4" data-cor="Vermelho" id="corVermelho">
+                                                <span style="display:inline-block;width:20px;height:20px;background:#c00;border:1px solid #ccc;margin-right:6px;"></span>Vermelho
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md m-4">
+                                        <div class="form-check form-check-inline">
+                                            <button type="button" class="btn btn-outline-primary text-black btnSelecionaCor p-4" data-cor="Azul" id="corAzul">
+                                                <span style="width:20px;height:20px; background:#007bff;border:1px solid #ccc;margin-right:6px;display:inline-block;" id="btn-azul"></span>Azul
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="d-grid text-right col-lg-2 align-items-right mt-4 ml-auto">
-                                <?php if ($editMode): ?>
-                                    <button type="submit" id="editarCarro" class="btn btn-primary fas fa-car py-2 fw-bold shadow-sm">
-                                        Salvar Alterações
-                                    </button>
-                                <?php else: ?>
-                                    <button type="submit" id="cadastrarCarro" class="btn btn-primary fas fa-car py-2 fw-bold shadow-sm">
-                                        Cadastrar Carro
-                                    </button>
-                                <?php endif; ?>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="ano" class="form-label">Ano</label>
+                                <input type="number" class="form-control" id="ano" name="ano" min="1900" max="<?= date('Y') ?>" value="<?= htmlspecialchars($carro['ano']) ?>" required>
                             </div>
+                            <div class="col-md-6">
+                                <label for="valor" class="form-label">Valor</label>
+                                <input type="text" class="form-control" id="valor" name="valor" min="0" step="0.01" placeholder="R$0.00" oninput="maskMoney(this)" value="<?= htmlspecialchars($carro['preco']) ?>" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <?php if ($editMode): ?>
+                                <!-- IMAGENS ATUAIS -->
+                                <div class="col-md-12 mb-3">
+                                    <label class="form-label">Imagens Atuais</label>
+                                    <div class="row" id="imagensAtuais">
+                                        <?php
+                                        require_once __DIR__ . '/Dados/ImagensCarros.php';
+                                        $imagens = ImagensCarros::buscarPorCarro($carro['id']);
+
+                                        if (!empty($imagens)):
+                                            foreach ($imagens as $img):
+                                        ?>
+                                                <div class="col-md-3 mb-3 imagem-item" data-img-id="<?= $img['id'] ?>">
+                                                    <div class="card">
+                                                        <img src="Arquivos/<?= htmlspecialchars($img['nome_arquivo']) ?>"
+                                                            class="card-img-top"
+                                                            style="height: 150px; object-fit: cover;">
+                                                        <div class="card-body p-2 text-center">
+                                                            <?php if ($img['is_principal']): ?>
+                                                                <span class="badge badge-primary mb-2">Principal</span>
+                                                            <?php else: ?>
+                                                                <button type="button"
+                                                                    class="btn btn-sm btn-outline-primary btn-definir-principal mb-2"
+                                                                    data-img-id="<?= $img['id'] ?>">
+                                                                    Definir como Principal
+                                                                </button>
+                                                            <?php endif; ?>
+                                                            <br>
+                                                            <button type="button"
+                                                                class="btn btn-sm btn-danger btn-deletar-imagem"
+                                                                data-img-id="<?= $img['id'] ?>">
+                                                                <i class="fas fa-trash"></i> Excluir
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            endforeach;
+                                        else:
+                                            ?>
+                                            <div class="col-12">
+                                                <p class="text-muted">Nenhuma imagem cadastrada</p>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                            <!-- UPLOAD DE NOVAS IMAGENS -->
+                            <div class="col-md-12">
+                                <label for="imagensCarro" class="form-label">
+                                    <?= $editMode ? 'Adicionar Mais Imagens' : 'Imagens do Carro' ?>
+                                </label>
+                                <input type="file"
+                                    class="form-control"
+                                    id="imagensCarro"
+                                    name="imagens[]"
+                                    accept="image/*"
+                                    multiple
+                                    <?= $editMode ? '' : 'required' ?>>
+                                <small class="text-muted">Você pode selecionar múltiplas imagens</small>
+
+                                <!-- Preview das imagens selecionadas -->
+                                <div id="previewNovasImagens" class="row mt-3"></div>
+                            </div>
+                        </div>
+                        <div class="d-grid text-right col-lg-2 align-items-right mt-4 ml-auto">
+                            <?php if ($editMode): ?>
+                                <button type="submit" id="editarCarro" class="btn btn-primary fas fa-car py-2 fw-bold shadow-sm">
+                                    Salvar Alterações
+                                </button>
+                            <?php else: ?>
+                                <button type="submit" id="cadastrarCarro" class="btn btn-primary fas fa-car py-2 fw-bold shadow-sm">
+                                    Cadastrar Carro
+                                </button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         </div>
     </form>
@@ -557,7 +450,6 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
             };
             reader.readAsDataURL(file);
         }
-
     </script>
 
     <!-- Script para eventos dos botões de imagens atuais (final do arquivo) -->
@@ -568,21 +460,21 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 const imgId = this.getAttribute('data-img-id');
                 if (!confirm('Tem certeza que deseja excluir esta imagem?')) return;
                 fetch('Views/DeletarImagem.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'img_id=' + encodeURIComponent(imgId)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.sucesso) {
-                        document.querySelector(`.imagem-item[data-img-id="${imgId}"]`).remove();
-                        alert('Imagem excluída com sucesso!');
-                    } else {
-                        alert('Erro ao excluir imagem');
-                    }
-                });
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: 'img_id=' + encodeURIComponent(imgId)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.sucesso) {
+                            document.querySelector(`.imagem-item[data-img-id="${imgId}"]`).remove();
+                            alert('Imagem excluída com sucesso!');
+                        } else {
+                            alert('Erro ao excluir imagem');
+                        }
+                    });
             });
         });
 
@@ -591,25 +483,25 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
             btn.addEventListener('click', function() {
                 const imgId = this.getAttribute('data-img-id');
                 fetch('Views/DefinirImagemPrincipal.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'img_id=' + encodeURIComponent(imgId)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.sucesso) {
-                        location.reload();
-                    } else {
-                        alert('Erro ao definir imagem principal');
-                    }
-                });
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: 'img_id=' + encodeURIComponent(imgId)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.sucesso) {
+                            location.reload();
+                        } else {
+                            alert('Erro ao definir imagem principal');
+                        }
+                    });
             });
         });
     </script>
 
-        
+
     </script>
 </body>
 

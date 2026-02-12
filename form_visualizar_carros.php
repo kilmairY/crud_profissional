@@ -29,121 +29,8 @@ $carros = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="Assets/CSS/form_visualizar_carros.css">
 
-    <style>
-        body {
-            background: linear-gradient(to bottom, #f4f6f9 0%, #e9ecef 100%);
-            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            padding: 40px 0;
-        }
-
-        .card.carro-card {
-            border-radius: 1.5rem;
-            border: none;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-            background: #fff;
-            transition: all 0.3s ease;
-            animation: slideUp 0.5s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .card.carro-card:hover {
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
-            transform: translateY(-5px);
-        }
-
-        .carro-card .card-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, #667eea 0%, #0068bd 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .carro-card .card-text {
-            font-size: 1.1rem;
-            color: #333;
-        }
-
-        .carro-card .btn-outline-primary {
-            border-radius: 10px;
-            border: 2px solid #667eea;
-            color: #667eea;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .carro-card .btn-outline-primary:hover {
-            background: linear-gradient(135deg, #667eea 0%, #0068bd 100%);
-            border-color: #667eea;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .carro-card .carousel-inner img {
-            border-radius: 1rem;
-            background: #e9ecef;
-        }
-
-        .carro-card .carousel-indicators li {
-            background-color: #667eea;
-        }
-
-        .carro-card .carousel-control-prev-icon,
-        .carro-card .carousel-control-next-icon {
-            filter: invert(40%) sepia(100%) saturate(500%) hue-rotate(200deg);
-        }
-
-        .carro-card .sem-imagem {
-            height: 300px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #aaa;
-            font-size: 1.3rem;
-            border-radius: 1rem;
-        }
-
-        .carro-card .card-body {
-            padding: 2rem 2.5rem 2rem 2.5rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #0068bd 100%);
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-primary:hover,
-        .btn-primary:focus {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-            background: linear-gradient(135deg, #0068bd 0%, #667eea 100%);
-        }
-        
-
-        .alert-info {
-            font-size: 1.1rem;
-            border-radius: 0.7rem;
-        }
-    </style>
 </head>
 
 <body>
@@ -175,14 +62,14 @@ $carros = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <div class="card carro-card w-100">
                             <div class="card-body">
                                 <h5 class="card-title mb-3">
-                                    <div class="row text-left">
+                                    <div class="row align-items-center">
                                         <div class="col-7 text-left">
-                                            <i class="fas fa-car-side mr-2 text-primary"></i>
-                                            <?= htmlspecialchars($carro['modelo']) ?>
+                                            <i class="fas fa-car-side icone-carro"></i>
+                                            <span class="nome-modelo"><?= htmlspecialchars($carro['modelo']) ?></span>
                                         </div>
                                         <?php if ($isAdmin): ?>
                                             <div class="col-5 text-right">
-                                                <a href="form_cadastro_carros.php?id=<?= $carro['id'] ?>" class="btn btn-sm btn-outline-primary ml-2 align-end">Editar</a>
+                                                <a href="form_cadastro_carros.php?id=<?= $carro['id'] ?>" class="btn btn-sm btn-editar">Editar</a>
                                             </div>
                                         <?php endif; ?>
                                     </div>
