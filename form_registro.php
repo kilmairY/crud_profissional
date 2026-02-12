@@ -15,44 +15,152 @@ if (!$_SESSION["usuario"]) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="Arquivos/responsive.css">
 
     <style>
         body {
-            background-color: #f4f6f9;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #f4f6f9 0%, #e9ecef 100%);
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px 0;
+            padding: 40px 20px;
         }
 
         .card {
-            border-radius: 1rem;
+            border-radius: 1.5rem;
+            border: none;
+            animation: slideUp 0.5s ease;
         }
 
-        /* ícones dentro dos inputs */
-        .input-group-text {
-            background-color: #f8f9fa;
-            border-right: none;
-            color: #6c757d;
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .form-control {
-            border-left: none;
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #0068bd 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
-        /* Efeito de foco azul */
-        .form-control:focus+.input-group-text,
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 5px;
+            border: 2px solid #e9ecef;
+            padding: 5px 7.5px;
+            transition: all 0.3s ease;
+        }
+
         .form-control:focus,
-        .input-group:focus-within .input-group-text,
-        .input-group:focus-within .form-control {
-            box-shadow: none;
-            border-color: #86b7fe;
-            color: #495057;
+        .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+        }
+
+        .input-group-text {
+            border-radius: 5px 0 0 5px;
+            border: 2px solid #e9ecef;
+            border-right: none;
+            background-color: #f8f9fa;
+            color: #6c757d;
+            transition: all 0.3s ease;
+        }
+
+        .input-group:focus-within .input-group-text {
+            border-color: #667eea;
+            background: #f0f4ff;
+            color: #667eea;
+        }
+
+        .input-group .form-control,
+        .input-group .form-select {
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+            flex: 1;
+        }
+
+        .form-select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px 15px;
+            background-position: right 10px center;
+        }
+
+        select.form-control,
+        select.form-select {
+            min-width: 200px;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+            padding-right: 35px;
+        }
+
+        select.form-control option,
+        select.form-select option {
+            padding: 10px;
+            white-space: normal;
+            overflow-wrap: break-word;
+        }
+
+        .fa-users-cog {
+            color: #667eea;
+        }
+
+        .fa-user {
+            color: #667eea;
+        }
+
+        .fa-birthday-cake {
+            color: #667eea;
+        }
+
+        .fa-envelope {
+            color: #667eea;
+        }
+
+        .fa-lock {
+            color: #dc3545;
+        }
+
+        .fa-user-plus {
+            color: #667eea;
+        }
+
+        a {
+            color: #667eea;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #0068bd;
+            text-decoration: none;
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
         }
     </style>
 </head>
@@ -65,14 +173,15 @@ if (!$_SESSION["usuario"]) {
 
                 <!-- card branco em volta da label -->
                 <div class="card shadow-lg border-0">
-                    <?php if (isset($_SESSION["usuario"]) && $_SESSION["usuario"]) { ?>
-                        <div class="col-md-12 text-end border-0 p-2">
-                            <a href="form_inicio.php?" class="btn btn-primary shadow-sm">
-                                <i class="fas fa-home me-2"></i>Início
-                            </a>
-                        </div>
-                    <?php } ?>
-
+                    <div class="row-6">
+                        <?php if (isset($_SESSION["usuario"]) && $_SESSION["usuario"]) { ?>
+                            <div class="col-12 d-flex align-items-center justify-content-end p-3">
+                                <a href="form_inicio.php?" class="btn btn-primary shadow-sm">
+                                    <i class="fas fa-home me-2 font-underline"></i><u>Início</u> 
+                                </a>
+                            </div>
+                        <?php } ?>
+                    </div>
                     <div class="card-body p-4">
 
                         <div class="text-center mb-4">
@@ -151,23 +260,11 @@ if (!$_SESSION["usuario"]) {
                                     </div>
                                 </div>
                             </div>
-                            <!-- senha  -->
-                            <div class="mb-4">
-                                <label class="form-label text-muted small fw-bold text-uppercase">Senha</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                    <input type="password"
-                                        name="Senha"
-                                        class="form-control"
-                                        placeholder="Crie uma senha forte"
-                                        required>
-                                </div>
-                            </div>
 
                             <!-- tipo de usuario -->
                             <?php if (isset($_SESSION['usuario']) && isset($_SESSION['usuario']['tipo_usuario']) && $_SESSION['usuario']['tipo_usuario'] === 'admin'): ?>
                                 <div class="mb-4">
-                                    <label class="form-label text-muted small fw-bold text-uppercase">Tipo de Usuário</label>
+                                    <label class="form-label text-muted fw-bold text-uppercase">Tipo de Usuário</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-users-cog"></i></span>
                                         <select name="Tipo_Usuario" class="form-select" required>
@@ -180,12 +277,27 @@ if (!$_SESSION["usuario"]) {
                             <?php else: ?>
                                 <input type="hidden" name="Tipo_Usuario" value="usuario">
                             <?php endif; ?>
-                            <!-- botão registrar -->
+                            <!-- senha  -->
+                             
+                            <div class="mb-4">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Senha</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password"
+                                        name="Senha"
+                                        class="form-control"
+                                        placeholder="Crie uma senha forte"
+                                        required>
+                                </div>
+                            </div>
 
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary py-2 fw-bold shadow-sm">
-                                    Registrar-se
-                                </button>
+                            <!-- botão registrar -->
+                            <div class="row-6 text-center mb-4">
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary py-2 fw-bold shadow-sm">
+                                        Registrar-se
+                                    </button>
+                                </div>
                             </div>
 
                         </form>

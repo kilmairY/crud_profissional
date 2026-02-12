@@ -52,35 +52,113 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Carros</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
         body {
-            background-color: #f4f6f9;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #f4f6f9 0%, #e9ecef 100%);
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 40px 0;
         }
 
         .card {
-            border-radius: 1rem;
+            border-radius: 1.5rem;
+            border: none;
             min-width: 500px;
             min-height: 600px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .form-label,
         .form-group label {
             font-size: 1.2rem;
+            font-weight: 500;
         }
 
         .form-check-label {
             font-size: 1.1rem;
         }
 
+        .form-control,
+        .form-select {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+        }
+
+        select.form-control {
+            width: 100%;
+            min-width: 200px;
+            max-width: 100%;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+            padding-right: 35px;
+        }
+
+        select.form-control option {
+            padding: 10px;
+            white-space: normal;
+            overflow-wrap: break-word;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #0068bd 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-outline-secondary {
+            border: 2px solid #6c757d;
+            color: #6c757d;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-secondary:hover {
+            background: #6c757d;
+            color: white;
+            transform: translateY(-2px);
+        }
+
         .imagem-preview {
             width: 100%;
             height: 220px;
-            background: #e9ecef;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             border-radius: 1rem;
             display: flex;
             align-items: center;
@@ -88,6 +166,13 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
             color: #aaa;
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
+            border: 2px dashed #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .imagem-preview:hover {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e9ecef 100%);
         }
     </style>
 </head>
@@ -145,7 +230,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                 </div>
                             </div>
 
-                            <label class="text-center mb-4">Cadastro de Carros</label>
+                            <h3 class="text-left mb-4">Cadastro de Carros</h3>
                             <div class="row mb-3">
                                 <div class="col-md-6 form-group">
                                     <label for="marcaCarro">Selecione a Marca</label>
@@ -473,82 +558,58 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
             reader.readAsDataURL(file);
         }
 
-        //Tratativa de imagens atuais (definir principal e deletar)
-        document.getElementById('imagensCarro').addEventListener('change', function(e) {
-            const previewContainer = document.getElementById('previewNovasImagens');
-            previewContainer.innerHTML = '';
+    </script>
 
-            Array.from(this.files).forEach((file, index) => {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    const col = document.createElement('div');
-                    col.className = 'col-md-3 mb-3';
-                    col.innerHTML = `
-                <div class="card">
-                    <img src="${e.target.result}" class="card-img-top" style="height: 150px; object-fit: cover;">
-                    <div class="card-body p-2 text-center">
-                        <small class="text-muted">Nova imagem ${index + 1}</small>
-                    </div>
-                </div>
-            `;
-                    previewContainer.appendChild(col);
-                };
-
-                reader.readAsDataURL(file);
+    <!-- Script para eventos dos botões de imagens atuais (final do arquivo) -->
+    <script>
+        // Deletar imagem
+        document.querySelectorAll('.btn-deletar-imagem').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const imgId = this.getAttribute('data-img-id');
+                if (!confirm('Tem certeza que deseja excluir esta imagem?')) return;
+                fetch('Views/DeletarImagem.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'img_id=' + encodeURIComponent(imgId)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.sucesso) {
+                        document.querySelector(`.imagem-item[data-img-id="${imgId}"]`).remove();
+                        alert('Imagem excluída com sucesso!');
+                    } else {
+                        alert('Erro ao excluir imagem');
+                    }
+                });
             });
         });
 
-        <?php if ($editMode): ?>
-            // Deletar imagem
-            document.querySelectorAll('.btn-deletar-imagem').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    if (!confirm('Tem certeza que deseja excluir esta imagem?')) return;
-
-                    const imgId = this.getAttribute('data-img-id');
-
-                    fetch('Views/DeletarImagem.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            body: 'img_id=' + imgId
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.sucesso) {
-                                document.querySelector(`.imagem-item[data-img-id="${imgId}"]`).remove();
-                                alert('Imagem excluída com sucesso!');
-                            } else {
-                                alert('Erro ao excluir imagem');
-                            }
-                        });
+        // Definir como principal
+        document.querySelectorAll('.btn-definir-principal').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const imgId = this.getAttribute('data-img-id');
+                fetch('Views/DefinirImagemPrincipal.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'img_id=' + encodeURIComponent(imgId)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.sucesso) {
+                        location.reload();
+                    } else {
+                        alert('Erro ao definir imagem principal');
+                    }
                 });
             });
+        });
+    </script>
 
-            // Definir como principal
-            document.querySelectorAll('.btn-definir-principal').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const imgId = this.getAttribute('data-img-id');
-
-                    fetch('Views/DefinirImagemPrincipal.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            body: 'img_id=' + imgId
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.sucesso) {
-                                location.reload();
-                            } else {
-                                alert('Erro ao definir imagem principal');
-                            }
-                        });
-                });
-            });
-        <?php endif; ?>
+        
     </script>
 </body>
 

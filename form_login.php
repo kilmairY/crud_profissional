@@ -11,45 +11,120 @@ if (isset($_GET['Sessao']) && $_GET['Sessao'] == 1) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
         body {
-            background-color: #f4f6f9;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #0068bd 100%);
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
 
         .card {
-            border-radius: 1rem;
-            /* Bordas arredondadas */
+            border-radius: 1.5rem;
+            border: none;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.98);
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .icon-circle {
             width: 80px;
             height: 80px;
-            background-color: #e7f1ff;
-            color: #0d6efd;
+            background: linear-gradient(135deg, #667eea 0%, #0068bd 100%);
+            color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.5rem auto;
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
         }
 
         .card:hover .icon-circle {
-            transform: scale(1.05);
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
         }
 
-        .a {
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+        }
+
+        .input-group-text {
+            border-radius: 10px 0 0 10px;
+            border: 2px solid #e9ecef;
+            border-right: none;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .input-group:focus-within .input-group-text {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .input-group .form-control {
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #0068bd 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        a {
+            color: #667eea;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: #0068bd;
             text-decoration: none;
-            align-items: center;
-            justify-content: end;
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
         }
     </style>
 </head>
@@ -150,11 +225,13 @@ if (isset($_GET['Sessao']) && $_GET['Sessao'] == 1) {
                                 </a>
                             </div>
 
+                            <div class="row-6 text-center mb-4">
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary py-2 fw-bold shadow-sm">
                                     Entrar
                                 </button>
                             </div>
+                        </div>
 
                         </form>
 
@@ -168,7 +245,7 @@ if (isset($_GET['Sessao']) && $_GET['Sessao'] == 1) {
                     </div>
                 </div>
 
-                <div class="text-center mt-3 text-muted small">
+                <div class="text-center mt-3 small" style="color: rgba(255, 255, 255, 0.9);">
                     &copy; <?php echo date('Y'); ?> CRUD INICIAL
                 </div>
 
